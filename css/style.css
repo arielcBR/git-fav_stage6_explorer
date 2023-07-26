@@ -110,14 +110,6 @@ table th:last-child {
     border-top-right-radius: 1.2rem;
 }
 
-tr:last-child td:last-child {
-    border-bottom-right-radius: 1.2rem;
-}
-
-tr:last-child td:first-child {
-    border-bottom-left-radius: 1.2rem;
-}
-
 table th{
     background-color: #06181C;
     color: #E1E1E6;
