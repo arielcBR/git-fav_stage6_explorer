@@ -20,7 +20,7 @@ export class Favorites {
                 throw new Error('Digite um usuário válido')
             
             const githubUser = await GithubUser.search(userLogin)
-            
+
             if (githubUser.login == undefined) throw new Error('Usuário não encontrado')
     
             this.users = [githubUser, ...this.users]
@@ -40,7 +40,8 @@ export class Favorites {
     }
 
     delete(userToDelete) {
-        const filteredUsers = this.users.filter(user => user.name != userToDelete)
+        userToDelete = userToDelete.replace('/', '')
+        const filteredUsers = this.users.filter(user => user.login != userToDelete)
 
         this.users = filteredUsers
         this.update()
@@ -78,7 +79,7 @@ export class FavoritesView extends Favorites{
                 const isOk = confirm('Tem certeza que deseja deletar?')
 
                 if (isOk) {
-                    this.delete(row.querySelector('.userName').textContent)
+                    this.delete(row.querySelector('.userLogin').textContent)
                 }
             }
         })
