@@ -10,14 +10,17 @@ export class Favorites {
 
     async add(userLogin) {
         try {
-            let userExist = this.users.find(user => user.login === userLogin)
 
-            if (userExist) {
+            let userExist = this.users.find(user => user.login.toLowerCase() == userLogin.toLowerCase())
+
+            if (userExist) 
                 throw new Error('Usuário já consta na lista de favoritos!')
-            }
-                
-            if (userLogin == '') throw new Error('Digite um usuário válido')
+    
+            if (userLogin == '')
+                throw new Error('Digite um usuário válido')
+            
             const githubUser = await GithubUser.search(userLogin)
+            
             if (githubUser.login == undefined) throw new Error('Usuário não encontrado')
     
             this.users = [githubUser, ...this.users]
@@ -34,23 +37,6 @@ export class Favorites {
 
     load() {
         this.users = JSON.parse(localStorage.getItem('@github-favorites:')) || []
-        
-        /* this.users = [
-            {
-                login: "arielcBR",
-                name: "Ariel Campos",
-                avatar_url: "https://avatars.githubusercontent.com/u/99102477?v=4",
-                public_repos: 42,
-                followers: 4
-            },
-            {
-                login: "maykbrito",
-                name: "Mayk Brito",
-                avatar_url: "https://avatars.githubusercontent.com/u/6643122?v=4",
-                public_repos: 107,
-                followers: 14087
-            }
-        ] */
     }
 
     delete(userToDelete) {
