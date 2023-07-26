@@ -1,3 +1,5 @@
+import { GithubUser } from "./GithubUser.js"
+
 // lógica dos dados
 export class Favorites {
     constructor(root) {
@@ -93,7 +95,9 @@ export class FavoritesView extends Favorites{
 
         tr.innerHTML = `
             <td>
-                <img src="${avatar_url}" alt="Imagem de ${name}">
+                <a href="https://github.com/${login}" target="_blank">
+                    <img src="${avatar_url}" alt="Imagem de ${name}">
+                </a>
                 <div>
                     <p class="userName">${name}</p>
                     <p class="userLogin">/${login}</p>
@@ -111,23 +115,5 @@ export class FavoritesView extends Favorites{
             .forEach((tr) => {
                 tr.remove()
             })
-    }
-}
-
-export class GithubUser {
-    static search(username) {
-        const endpoint = `https://api.github.com/users/${username}`
-        
-        return fetch(endpoint)
-            .then(data => data.json())
-            .then(({ login, name, public_repos, followers, avatar_url }) =>
-                ({
-                    login,
-                    name,
-                    public_repos,
-                    followers,
-                    avatar_url
-                })
-            )
     }
 }
