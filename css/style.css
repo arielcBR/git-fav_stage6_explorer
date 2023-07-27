@@ -135,7 +135,7 @@ table tr td {
     padding: 2.4rem 2.4rem 2.4rem 4rem;
 }
 
-table tr>td:nth-child(1){
+table tbody tr>td:nth-child(1){
     display: flex;
     align-items: center;
     height: 100%;
@@ -171,4 +171,27 @@ table tr .userLogin {
 
 table td td a{
     text-decoration: none;
+}
+
+table tfoot td:first-child{
+    height: 25rem;
+}
+
+.emptyTable{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6rem;
+}
+
+.emptyTable p{
+    color: #4E5455;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 2.47rem;
+}
+
+.hide{
+    display: none;
 }

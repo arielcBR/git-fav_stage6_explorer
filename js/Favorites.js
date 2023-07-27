@@ -4,10 +4,11 @@ import { GithubUser } from "./GithubUser.js"
 export class Favorites {
     constructor(root) {
         this.root = document.querySelector(root)
+        this.table = document.querySelector('table')
         this.tbody = this.root.querySelector("table tbody")
         this.load()
         this.onAdd()
-        
+        this.emptyState()
     }
 
     async add(userLogin) {
@@ -39,6 +40,7 @@ export class Favorites {
 
     load() {
         this.users = JSON.parse(localStorage.getItem('@github-favorites:')) || []
+        this.createTfoot()
     }
 
     delete(userToDelete) {
@@ -71,8 +73,8 @@ export class FavoritesView extends Favorites{
     }
 
     update() {
+        this.emptyState()
         this.removeAllTr()
-
         this.users.forEach(user => {
             const row = this.createRow(user)
             this.tbody.appendChild(row)
@@ -116,4 +118,35 @@ export class FavoritesView extends Favorites{
                 tr.remove()
             })
     }
+
+    emptyState() {
+        const isEmpty = this.users.length
+        const tfootExist = this.table.querySelector('tfoot')
+
+        if (!isEmpty && !tfootExist) 
+            this.createTfoot()
+
+        else if (isEmpty && tfootExist)
+            this.removeTfoot()       
+    }
+
+    removeTfoot() {
+        this.table.querySelector('tfoot').remove()
+    }
+
+    createTfoot() {
+        const tfoot = document.createElement('tfoot')
+        const td = document.createElement('td')
+
+        td.colSpan = '4'
+        td.innerHTML = `
+            <div class="emptyTable">
+                <img src="./images/star.svg" alt="imagem de uma estrela">
+                    <p>Nenhum favorito ainda</p>
+            </div>
+        `
+        tfoot.appendChild(td)
+        this.table.appendChild(tfoot)
+    }
+
 }
